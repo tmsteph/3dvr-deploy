@@ -15,6 +15,7 @@ Nothing here is live infrastructure yet — it’s a mock to help explain the di
 - Any HTML change you make is reflected immediately on refresh—there’s no build step.
 - Want live reload? Point a lightweight dev server (like VS Code’s Live Server or `python -m http.server`) at the folder.
 - Pair the README with the on-page “How to edit this mock” card for quick reminders.
+Open `index.html` in your browser to explore the concept copy and visuals. Edit the file locally and refresh to iterate on the mock.
 
 ## Status
 
