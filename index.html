@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>3dvr Site</title>
+  <meta
+    name="description"
+    content="Deployed with 3dvr. Open hardware. Open internet."
+  />
+
+  <style>
+    /* -------- Reset / tokens -------- */
+    :root {
+      --bg-gradient-from: #0f172a;  /* slate-900 */
+      --bg-gradient-to: #1e1e2f;   /* custom deep violet/navy */
+      --panel-bg: rgba(30, 41, 59, 0.6); /* slate-800/60% */
+      --panel-border: rgba(148, 163, 184, 0.18); /* slate-400/18% */
+      --text-primary: #f8fafc; /* slate-50 */
+      --text-dim: #94a3b8; /* slate-400 */
+      --accent: #38bdf8; /* sky-400 */
+      --accent-glow: rgba(56,189,248,0.4);
+      --radius-xl: 1.25rem;
+      --radius-full: 999px;
+      --shadow-card:
+        0 30px 80px rgba(0,0,0,0.8),
+        0 2px 4px rgba(0,0,0,0.4);
+      --font-stack:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Inter",
+        "Roboto",
+        "Ubuntu",
+        "Segoe UI",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100dvh;
+      background: radial-gradient(
+          circle at 20% 20%,
+          rgba(56,189,248,0.12) 0%,
+          rgba(0,0,0,0) 60%
+        ),
+        radial-gradient(
+          circle at 80% 10%,
+          rgba(168,85,247,0.1) 0%,
+          rgba(0,0,0,0) 60%
+        ),
+        linear-gradient(
+          to bottom right,
+          var(--bg-gradient-from),
+          var(--bg-gradient-to)
+        );
+      color: var(--text-primary);
+      font-family: var(--font-stack);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* -------- Layout shell -------- */
+    .shell {
+      width: 100%;
+      max-width: 70rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .shell {
+        grid-template-columns: 1fr 24rem;
+      }
+    }
+
+    /* -------- Card style -------- */
+    .card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      /* subtle glossy sweep */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at 20% 0%,
+        rgba(255,255,255,0.08) 0%,
+        rgba(255,255,255,0) 70%
+      );
+      pointer-events: none;
+    }
+
+    .card-body {
+      position: relative;
+      padding: 1.5rem 1.5rem 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .card-body {
+        padding: 2rem 2rem 1.75rem;
+      }
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* -------- Badge / pill -------- */
+    .pill {
+      align-self: flex-start;
+      background: rgba(15,23,42,0.6);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-full);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 500;
+      line-height: 1;
+      padding: 0.5rem 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 8px 24px rgba(56,189,248,0.25);
+    }
+
+    .dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px 4px var(--accent-glow);
+    }
+
+    /* -------- Title / text -------- */
+    h1 {
+      font-size: clamp(1.5rem, 0.4vw + 1.4rem, 1.75rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .grad-accent {
+      background-image: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        #a855f7 100%
+      );
+      color: transparent;
+      -webkit-background-clip: text;
+              background-clip: text;
+      font-weight: 600;
+    }
+
+    p.lead {
+      color: var(--text-dim);
+      line-height: 1.5;
+      font-size: 0.95rem;
+      max-width: 50ch;
+    }
+
+    /* -------- Mini list -------- */
+    ul.features {
+      display: grid;
+      gap: 0.5rem 1rem;
+      padding-left: 0;
+      list-style: none;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+
+    @media (min-width: 480px) {
+      ul.features {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .feat {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .check {
+      flex-shrink: 0;
+      width: 1rem;
+      height: 1rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.7rem;
+      line-height: 1rem;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 0 12px 2px var(--accent-glow);
+    }
+
+    .feat span {
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    /* -------- Call to action footer -------- */
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .cta-primary {
+      background: radial-gradient(
+        circle at 0% 0%,
+        rgba(56,189,248,0.4) 0%,
+        rgba(168,85,247,0.25) 60%
+      );
+      border: 0;
+      border-radius: var(--radius-full);
+      padding: 0.8rem 1.1rem;
+      line-height: 1.1;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      box-shadow:
+        0 30px 80px rgba(56,189,248,0.2),
+        0 10px 30px rgba(168,85,247,0.25),
+        0 2px 4px rgba(0,0,0,0.8);
+      position: relative;
+    }
+
+    .cta-primary:active {
+      transform: scale(0.98);
+    }
+
+    .cta-hint {
+      font-size: 0.7rem;
+      line-height: 1.2;
+      color: var(--text-dim);
+      max-width: 20rem;
+    }
+
+    /* -------- Sidebar card -------- */
+    .sidebar-block + .sidebar-block {
+      margin-top: 1.5rem;
+    }
+
+    .label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: rgba(15,23,42,0.6);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-xl);
+      padding: 0.75rem 1rem;
+      line-height: 1.4;
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    footer.site-footer {
+      text-align: center;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      color: var(--text-dim);
+      margin-top: 2rem;
+    }
+
+    footer.site-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(56,189,248,0.4);
+    }
+
+    footer.site-footer a:hover {
+      border-bottom-color: rgba(56,189,248,0.8);
+    }
+  </style>
+
+  <script>
+    // Tiny script to show your current machine hostname/IP
+    // so we know "where" this site is running.
+    // In production we'll overwrite this with real deploy metadata.
+    document.addEventListener('DOMContentLoaded', () => {
+      const target = document.querySelector('[data-runtime-target]');
+      if (!target) return;
+
+      // We can't get local IP directly without extra steps,
+      // so for now just show the current origin.
+      target.textContent = window.location.origin;
+    });
+
+    // Placeholder "Redeploy" button click.
+    // Later this will trigger a push to peers / re-build.
+    function triggerDeploy() {
+      alert("Pretend we just pushed a new version to the 3dvr mesh ✨");
+    }
+  </script>
+</head>
+
+<body>
+  <main class="shell">
+
+    <!-- Main / hero -->
+    <section class="card">
+      <div class="card-body stack">
+
+        <div class="pill">
+          <div class="dot"></div>
+          <span>LIVE · served by 3dvr</span>
+        </div>
+
+        <h1>
+          This site is running on
+          <span class="grad-accent">your network</span>,
+          not Big Cloud.
+        </h1>
+
+        <p class="lead">
+          You’re looking at a self-hosted deploy. The long-term goal:
+          edit code, press one button, and everyone in the group
+          instantly gets the new version — like Vercel meets GitHub,
+          but owned by humans not corporations.
+        </p>
+
+        <ul class="features">
+          <li class="feat">
+            <div class="check">✓</div>
+            <div>
+              Push once
+              <span>Instantly update your public URL</span>
+            </div>
+          </li>
+          <li class="feat">
+            <div class="check">✓</div>
+            <div>
+              Mesh hosting
+              <span>Friends can mirror your site</span>
+            </div>
+          </li>
+          <li class="feat">
+            <div class="check">✓</div>
+            <div>
+              Local first
+              <span>No account required</span>
+            </div>
+          </li>
+          <li class="feat">
+            <div class="check">✓</div>
+            <div>
+              Open source hardware
+              <span>Runs on tiny boards</span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="cta-row">
+          <button class="cta-primary" onclick="triggerDeploy()">
+            Redeploy this site →
+          </button>
+          <div class="cta-hint">
+            This will call a local script in the future.
+            For now it’s just a demo button.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sidebar / meta -->
+    <aside class="stack">
+      <section class="card sidebar-block">
+        <div class="card-body">
+          <div class="label">Current Host</div>
+          <div class="mono" data-runtime-target>
+            loading...
+          </div>
+        </div>
+      </section>
+
+      <section class="card sidebar-block">
+        <div class="card-body">
+          <div class="label">How to share</div>
+          <div class="mono">
+            1. Expose this port (ex: tailscale / ssh tunnel)<br/>
+            2. Send the URL to a friend<br/>
+            3. They see this exact page
+          </div>
+        </div>
+      </section>
+
+      <section class="card sidebar-block">
+        <div class="card-body">
+          <div class="label">Next step (manual)</div>
+          <div class="mono">
+            # edit ./index.html<br/>
+            # save<br/>
+            # reload browser
+          </div>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      3dvr deploy prototype · local-first web platform.
+      <br/>
+      Goal: replace centralized GitHub repos and Vercel hosting with
+      human-owned mesh computers.
+    </p>
+
+    <p>
+      This page is static HTML/CSS/JS. No build step. No NPM.
+      Fully portable.
+      <br/>
+      <a href="#">docs coming soon</a>
+    </p>
+  </footer>
+
+</body>
+</html>
