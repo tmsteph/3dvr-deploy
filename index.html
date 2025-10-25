@@ -10,7 +10,7 @@
   <title>3dvr Site</title>
   <meta
     name="description"
-    content="Deployed with 3dvr. Open hardware. Open internet."
+    content="Concept preview for a future 3dvr self-hosted deploy. Static mock only."
   />
 
   <style>
@@ -209,7 +209,7 @@
       width: 1rem;
       height: 1rem;
       border-radius: var(--radius-full);
-      border: 1px solid var(--accent);
+      border: 1px dashed var(--accent);
       color: var(--accent);
       font-size: 0.7rem;
       line-height: 1rem;
@@ -313,7 +313,7 @@
   <script>
     // Tiny script to show your current machine hostname/IP
     // so we know "where" this site is running.
-    // In production we'll overwrite this with real deploy metadata.
+    // Future builds will swap this out with real deploy metadata.
     document.addEventListener('DOMContentLoaded', () => {
       const target = document.querySelector('[data-runtime-target]');
       if (!target) return;
@@ -322,12 +322,6 @@
       // so for now just show the current origin.
       target.textContent = window.location.origin;
     });
-
-    // Placeholder "Redeploy" button click.
-    // Later this will trigger a push to peers / re-build.
-    function triggerDeploy() {
-      alert("Pretend we just pushed a new version to the 3dvr mesh ✨");
-    }
   </script>
 </head>
 
@@ -340,61 +334,59 @@
 
         <div class="pill">
           <div class="dot"></div>
-          <span>LIVE · served by 3dvr</span>
+          <span>CONCEPT · static mock</span>
         </div>
 
         <h1>
-          This site is running on
-          <span class="grad-accent">your network</span>,
-          not Big Cloud.
+          This page sketches how 3dvr deploy
+          <span class="grad-accent">could feel</span>
+          once it’s live.
         </h1>
 
         <p class="lead">
-          You’re looking at a self-hosted deploy that’s already running on
-          your machine. Today you can tweak this page locally, refresh the
-          browser, and share the port with anyone you like. We’re building
-          toward the one-click, everybody-gets-it updates — like Vercel meets
-          GitHub, but owned by humans not corporations.
+          Right now this is a static demo bundled with the repo — nothing is
+          actually being self-hosted yet. Tweak the file, refresh, and imagine
+          where we’re heading while we build the real mesh deploy platform.
         </p>
 
         <ul class="features">
           <li class="feat">
-            <div class="check">✓</div>
+            <div class="check">⋯</div>
             <div>
-              Local hosting
-              <span>Everything you see is served from this machine</span>
+              Planned local hosting
+              <span>The eventual goal: serve from your machine, not Big Cloud</span>
             </div>
           </li>
           <li class="feat">
-            <div class="check">✓</div>
+            <div class="check">⋯</div>
             <div>
-              Instant edits
-              <span>Save <code>index.html</code> and refresh to ship changes</span>
+              Planned instant edits
+              <span>For now it’s manual — edit <code>index.html</code> and refresh</span>
             </div>
           </li>
           <li class="feat">
-            <div class="check">✓</div>
+            <div class="check">⋯</div>
             <div>
-              Shareable today
-              <span>Expose the port and friends load this exact page</span>
+              Shareable vision
+              <span>We’ll enable one-click sharing once the mesh deploy lands</span>
             </div>
           </li>
           <li class="feat">
-            <div class="check">✓</div>
+            <div class="check">⋯</div>
             <div>
-              Open stack
-              <span>Plain HTML/CSS/JS — no build step required</span>
+              Open stack vision
+              <span>We’re aiming for plain HTML/CSS/JS — no build step required</span>
             </div>
           </li>
         </ul>
 
         <div class="cta-row">
-          <button class="cta-primary" onclick="triggerDeploy()">
-            Redeploy this site →
+          <button class="cta-primary" type="button" disabled>
+            Redeploy (coming soon)
           </button>
           <div class="cta-hint">
-            For now, “redeploy” means edit this file and refresh.
-            The scripted push is coming next.
+            Redeploy automation isn’t wired up yet — follow along as we build
+            it for real self-hosted updates.
           </div>
         </div>
       </div>
@@ -404,7 +396,7 @@
     <aside class="stack">
       <section class="card sidebar-block">
         <div class="card-body">
-          <div class="label">Current Host</div>
+          <div class="label">Current Host (local demo)</div>
           <div class="mono" data-runtime-target>
             loading...
           </div>
@@ -413,18 +405,18 @@
 
       <section class="card sidebar-block">
         <div class="card-body">
-          <div class="label">How to share</div>
+          <div class="label">How sharing will work</div>
           <div class="mono">
-            1. Expose this port (ex: tailscale / ssh tunnel)<br/>
+            1. Expose this port (tailscale / ssh tunnel)<br/>
             2. Send the URL to a friend<br/>
-            3. They see this exact page
+            3. They’ll hit the real thing once hosting ships
           </div>
         </div>
       </section>
 
       <section class="card sidebar-block">
         <div class="card-body">
-          <div class="label">Next step (manual)</div>
+          <div class="label">What you can do today</div>
           <div class="mono">
             # edit ./index.html<br/>
             # save<br/>
@@ -437,7 +429,7 @@
 
   <footer class="site-footer">
     <p>
-      3dvr deploy prototype · local-first web platform.
+      3dvr deploy concept · local-first web platform in progress.
       <br/>
       Goal: replace centralized GitHub repos and Vercel hosting with
       human-owned mesh computers.
@@ -445,7 +437,7 @@
 
     <p>
       This page is static HTML/CSS/JS. No build step. No NPM.
-      Fully portable.
+      It’s a preview, not a production deploy.
       <br/>
       <a href="#">docs coming soon</a>
     </p>
